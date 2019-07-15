@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+
+    <link rel="stylesheet" href="jquery-autocomplete.css">
+
+    <title>Jquery Autocomplete Plugin</title>
+  </head>
+  <body>
+    <div class="container">
+
+        <div class="well well-sm bg-light p-3 my-3">
+            <div class="text-center display-1">
+                <strong>TODO</strong>
+            </div>
+        </div>
+        <div class="row justify-content-end mb-3">
+            <div class="col-12">
+                <button type="button" class="btn btn-dark autocomplete-destroy float-right">Destroy AUTOCOMPLETE</button>
+                <button type="button" class="btn btn-light autocomplete-init float-right mr-3">Initialize AUTOCOMPLETE</button>
+            </div>
+        </div>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Task</th>
+                    <th>Priority</th>
+                    <th>Assigne (AUTOCOMPLETE)</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+
+            <tbody id="table">
+                <tr>
+                    <td>Algo</td>
+                    <td>Low</td>
+                    <td>Matias Irviti</td>
+                    <td>
+                        <button type="button" class="btn btn-default remove-button">Remove</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <input type="text" class="form-control" id="task" />
+                    </td>
+                    <td>
+                        <select class="form-control" id="priority">
+                            <option>Low</option>
+                            <option>Medium</option>
+                            <option>High</option>
+                            <option>Critical</option>
+                        </select>
+                    </td>
+                    <td>
+                        <input type="text" class="form-control" id="assignee" />
+                    </td>
+                    <td>
+                        <button type="button" id="add-button" class="btn btn-default">Add</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+    </div>
+
+    <!-- JavaScript -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
+    <script src="jquery-autocomplete.js"></script>
+    <script>
+        $(document).ready(function() {
+            // Items for AUTOCOMPLETE
+            var people = [
+                {
+                    id: 1,
+                    value: 'Gonzalo Franquini'
+                },
+                {
+                    id: 2,
+                    value: 'Matias Irviti'
+                },
+                {
+                    id: 3,
+                    value: 'Nicolas Molina'
+                },
+                {
+                    id: 4,
+                    value: 'Jemina Mazely'
+                },
+                {
+                    id: 5,
+                    value: 'Gamorra Caramelciano'
+                }
+            ];
+
+            function initializeAutocomplete() {
+                // ==================================================
+                // Initialize AUTOCOMPLETE plugin
+                // ==================================================
+                $('#assignee').autocomplete({
+                    value: 'id',
+                    items: people
+                })
+
+                // ==================================================
+                // Attach event selected to AUTOCOMPLETE
+                // ==================================================
+                .on('selected.autocomplete', function(e, value, text) {
+                    toastr.success('Event SELECTED fired!<br/><br/>Value => ' + value + '<br/>Text => ' + text);
+                    $('#assignee').val(text);
+                })
+
+                // ==================================================
+                // Attach event closed to AUTOCOMPLETE
+                // ==================================================
+                .on('closed.autocomplete', function() {
+                    toastr.info('Event CLOSED fired!');
+                })
+
+                // ==================================================
+                // Attach event clean to AUTOCOMPLETE
+                // ==================================================
+                .on('clean.autocomplete', function() {
+                    toastr.warning('Event CLEAN fired!');
+                })
+
+                // ==================================================
+                // Attach event destroy to AUTOCOMPLETE
+                // ==================================================
+                .on('destroy.autocomplete', function() {
+                    toastr.error('Event DESTROY fired!');
+                });
+            }
+
+            initializeAutocomplete();
+
+            $('.autocomplete-destroy').on('click', function() {
+                $('#assignee').autocomplete('destroy');
+            });
+
+            $('.autocomplete-init').on('click', function() {
+                if (!$('#assignee').data('autocomplete')) {
+                    initializeAutocomplete();
+                }
+            });
+
+            $('#add-button').click(function() {
+                if ($('#task').val().trim() === '') {
+                    return alert('You can\'t do *nothing* as a task!');
+                }
+
+                // ==================================================
+                // Use AUTOCOMPLETE instance
+                // ==================================================
+                var autocomplete = $('#assignee').data('autocomplete');
+
+                console.log('SELECTED ITEM', autocomplete.selected());
+                console.log('SELECTED ITEM VALUE', autocomplete.value());
+                console.log('SELECTED ITEM TEXT', autocomplete.text());
+
+                $('#table').prepend(
+                    '<tr>' +
+                        '<td>' + $('#task').val() + '</td>' +
+                        '<td>' + $('#priority').val() + '</td>' +
+                        '<td>' + autocomplete.text() + '</td>' +
+                        '<td><button type="button" class="btn btn-default remove-button">Remove</button></td>' +
+                    '</tr>'
+                );
+                $('#task').val('');
+                $('#priority').val('Low');
+                $('#assignee').autocomplete('clean');
+            });
+
+            $(document).on('click', '.remove-button', function() {
+                $(this).parent().parent().remove();
+            });
+        });
+    </script>
+  </body>
+</html>
