@@ -58,11 +58,11 @@
         // Enable or disable when click outside autocomplete suggestion
         enableCloseOnClickOutside: true,
 
+        // Enable or disable calculate absolute position
+        calculatePosition: true,
+
         // Width autocomplete list. Default is the same width to the input
         width: null,
-
-        // Position autocomplete list. Default is 'absolute'
-        position: 'absolute',
 
         // Offset Top autocomplete list. Default is the same height to the input + 10px
         offsetTop: 10,
@@ -241,12 +241,15 @@
         // Create a DIV element that will contain the items (values):
         container = $('<' + this.config.tagItemsContainer + '/>')
             .attr('id', this.idContainer.replace('#', ''))
-            .addClass(this.config.tagItemsClass)
-            .css({
-                position:  + this.config.position,
+            .addClass(this.config.tagItemsClass);
+
+        if (this.config.calculatePosition) {
+            container.css({
+                position: 'absolute',
                 left: this.$element.offset().left + this.config.offsetLeft,
                 top: this.$element.offset().top + this.$element.height() + this.config.offsetTop
             });
+        }
 
         // Define container style:
         if (this.config.width) {

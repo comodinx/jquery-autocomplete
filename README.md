@@ -74,11 +74,11 @@ Options can be passed via data attributes or JavaScript. For data attributes, ap
     // Enable or disable when click outside autocomplete suggestion
     enableCloseOnClickOutside: true,
 
+    // Enable or disable calculate absolute position
+    calculatePosition: true,
+
     // Width of autocomplete list. Default is the same width to the input. Posibles values is the same accepted by jquery css function  
     width: null,
-
-    // Position autocomplete list. Default is 'absolute'
-    position: 'absolute',
 
     // Offset Top autocomplete list. Default is the same height to the input + 10px
     offsetTop: 10,
