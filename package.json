@@ -17,6 +17,7 @@
     "plugin",
     "input"
   ],
+  "private": false,
   "author": "Nicolas Molina",
   "license": "MIT",
   "bugs": {
