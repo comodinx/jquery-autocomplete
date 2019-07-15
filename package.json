@@ -1,0 +1,26 @@
+{
+  "name": "@comodinx/jquery-autocomplete",
+  "version": "0.1.0",
+  "description": "Jquery Autocomplete Plugin",
+  "main": "jquery-autocomplete.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/comodinx/jquery-autocomplete.git"
+  },
+  "keywords": [
+    "jquery",
+    "jquery-plugin",
+    "autocomplete",
+    "plugin",
+    "input"
+  ],
+  "author": "Nicolas Molina",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/comodinx/jquery-autocomplete/issues"
+  },
+  "homepage": "https://github.com/comodinx/jquery-autocomplete#readme"
+}
